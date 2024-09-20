@@ -1,5 +1,5 @@
 import { ClassSerializerInterceptor, Injectable } from '@nestjs/common';
-import { PrismaService } from '../database/prisma.service';
+import { PrismaService } from '../../database/prisma.service';
 import { User, Post,  Prisma } from '@prisma/client';
 
 

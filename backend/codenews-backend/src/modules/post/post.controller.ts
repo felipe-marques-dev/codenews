@@ -11,7 +11,7 @@ import {
 
   import { PostService } from './post.service';
   import { Prisma, Post as PostModel} from '@prisma/client';
-  import { CreatePost } from 'src/dtos/create-post-body';
+  import { CreatePost } from 'src/modules/post/dto/create-post-body';
 
 @Controller('post')
 export class PostController{
@@ -31,7 +31,7 @@ export class PostController{
     ): Promise<PostModel>{
         const {title, content, published, authorId } = postData
         return this.postService.createPost(
-        title,
+        title, 
         content,
         published,
         authorId,
