@@ -1,47 +1,34 @@
 import { ClassSerializerInterceptor, Injectable } from '@nestjs/common';
 import { PrismaService } from '../../database/prisma.service';
-import { User, Post,  Prisma } from '@prisma/client';
+import { CreatePostDto } from './dto/create-post-body';
+import { PostRepository } from './repository/post.repository';
 
 
 @Injectable()
 export class PostService{
-    constructor ( private prisma: PrismaService){}
+   constructor (
+    private readonly postRepository: PostRepository
+   ){} 
 
+   async findAll(){
+    return this.postRepository.findAll();
+   }
 
-    // pega todos os posts
-    async posts(params:{
-        skip?: number;
-        take?: number;
-        cursor?: Prisma.PostWhereUniqueInput;
-        orderBy?: Prisma.PostOrderByWithRelationInput;
-    }): Promise<Post[]>{
-        const {skip, take, cursor, orderBy} = params;
-        return this.prisma.post.findMany({
-            skip,
-            take,
-            cursor,
-            orderBy,
-        });
-    }
+   async findOne(id: number){
+    return this.postRepository.findOne(id);
+   }
 
-    // cria posts
-    async createPost(title: string, content: string, published: boolean, authorId: number){
-        return this.prisma.post.create({
-            data: {
-                title,
-                content,
-                published,
-                authorId
-            }
-        })
-    }
+   async createPost(createPostDto: CreatePostDto){
+    return this.postRepository.createPost(createPostDto);
+   }
 
-    async deletePostById(id: number ){
-        return this.prisma.post.delete({
-            where: {id: id}
-        })
-    }
+   async updatePost(id: number, data: Partial<CreatePostDto>){
+    return this.postRepository.updatePost(id, data);
+   }
 
+   async deletePost(id: number){
+    return this.postRepository.deletePost(id);
+   }
 
 
 }

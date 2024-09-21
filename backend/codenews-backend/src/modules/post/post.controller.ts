@@ -9,10 +9,9 @@ import {
     ValidationPipe,
   } from '@nestjs/common';
 
-  import { PostService } from './post.service';
-  import { Prisma, Post as PostModel} from '@prisma/client';
-  import { CreatePost } from 'src/modules/post/dto/create-post-body';
-
+import { PostService } from './post.service';
+import { Prisma, Post as PostModel} from '@prisma/client';
+import { CreatePostDto } from './dto/create-post-body';
 @Controller('post')
 export class PostController{
 
@@ -21,28 +20,25 @@ export class PostController{
     ){}
 
     @Get('allpost')
-    async getAllPosts(): Promise<PostModel[]>{
-        return this.postService.posts({})
+    async findAll(): Promise<PostModel[]>{
+        return this.postService.findAll();
     }
 
     @Post('create-post')
-    async postCreate(
-        @Body() postData: CreatePost,
-    ): Promise<PostModel>{
-        const {title, content, published, authorId } = postData
-        return this.postService.createPost(
-        title, 
-        content,
-        published,
-        authorId,
-        )
+    async create(
+        @Body() postData: CreatePostDto): Promise<PostModel>{
+        return this.postService.createPost(postData)
     }
 
-    @Delete('delete-post/:id')
-    async postDelete(
-        @Param('id') id: string
-    ): Promise<PostModel>{
-        return this.postService.deletePostById(+id);
+    @Get(':id')
+    async findOne(@Param('id') id: number ): Promise<PostModel>{
+        return this.postService.findOne(id)
+    }
+
+
+    @Delete(':id')
+    async delete(@Param('id') id: number ): Promise<PostModel>{
+        return this.postService.deletePost(id);
     }
 
   }
