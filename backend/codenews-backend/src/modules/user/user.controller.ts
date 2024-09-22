@@ -10,7 +10,7 @@ import {
   } from '@nestjs/common';
   import { UserService } from './user.service';
   import { Prisma, User, User as UserModel, } from '@prisma/client';
-  import { CreateMember } from '../dtos/create-member-body';
+  import { CreateMember } from './dto/create-member-body';
 
 @Controller('account')
 export class UserController{
