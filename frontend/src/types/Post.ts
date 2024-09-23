@@ -3,6 +3,7 @@ export interface Post{
     title: string;
     content: string;
     published: boolean;
+    author: string;
     authorId?: number;
-
+    
 }
