@@ -5,8 +5,14 @@ import { CreatePostDto } from '../dto/create-post-body';
 export class PostRepository {
   constructor(private readonly prisma: PrismaService) {}
 
+
+
   async findAll() {
-    return this.prisma.post.findMany();
+    return this.prisma.post.findMany({
+      include: {
+        author: true,
+      }
+    });
   }
 
   async findOne(id: number) {
@@ -16,15 +22,29 @@ export class PostRepository {
   }
 
   async createPost(createPostDto: CreatePostDto) {
+    const {authorId, ...postData} = createPostDto
     return this.prisma.post.create({
-      data: createPostDto,
+      data: {
+        ...postData,
+        author: {
+          connect: { id: authorId},
+        }
+      }
     });
   }
 
-  async updatePost(id: number, data: Partial<CreatePostDto>) {
+  async updatePost(id: number, updatePostDto: Partial<CreatePostDto>) {
+    const {authorId, ...postData} = updatePostDto;
     return this.prisma.post.update({
       where: { id },
-      data,
+      data:{
+        ...postData,
+        ...authorId && { // atualiza o autor somente se um novo id for passado
+          author: {
+            connect: { id: authorId}
+          }
+        }
+      },
     });
   }
 
