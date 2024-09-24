@@ -10,6 +10,7 @@ import {
     UploadedFile,
     Res,
     ValidationPipe,
+    BadRequestException,
   } from '@nestjs/common';
 
 import { PostService } from './post.service';
@@ -18,7 +19,7 @@ import { CreatePostDto } from './dto/create-post-body';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { v4 as uuidv4 } from 'uuid';
-import { extname } from 'path';
+import { extname, join } from 'path';
 
 @Controller('post')
 export class PostController{
@@ -32,33 +33,47 @@ export class PostController{
         return this.postService.findAll();
     }
 
-    @Post('create-post')
-    @UseInterceptors(FileInterceptor('image', {
-    storage: diskStorage({
-      destination: './uploads', // Pasta onde as imagens serão salvas
-      filename: (req, file, cb) => {
-        const uniqueSuffix = uuidv4() + extname(file.originalname); // Gera um nome único para o arquivo
-        cb(null, uniqueSuffix);
+      // Método para obter a configuração de storage
+    private getStorage() {
+        return diskStorage({
+        destination: './uploads', // Diretório onde os arquivos serão armazenados
+        filename: (req, file, cb) => {
+            const uniqueSuffix = `${Date.now()}-${file.originalname}`;
+            cb(null, uniqueSuffix); // Salva o arquivo com um nome único
         },
-     }),
-    }))
+        });
+    }
+
+    @Post('create-post')
+    @UseInterceptors(FileInterceptor('image', { storage: diskStorage({
+        destination: './uploads', // Diretório onde os arquivos serão armazenados
+        filename: (req, file, cb) => {
+            const uniqueSuffix = `${Date.now()}-${file.originalname}`;
+            cb(null, uniqueSuffix); // Salva o arquivo com um nome único
+        },
+        }) }))
     async createPost(
         @UploadedFile() file: Express.Multer.File,
         @Body() createPostDto: CreatePostDto,
-        ) {
+    ) {
+        console.log('Arquivo recebido:', file); // verifica os arquivos recebidos
+
         if (!file) {
-            return { message: 'No file uploaded' };
-        }
-        // Cria o novo post com os dados do DTO e a URL da imagem
-        const newPost = await this.postService.createPost({
-            ...createPostDto, // Utilize createPostDto aqui
-            imageUrl: file.path,
-        });
-
-        return newPost;
+        throw new BadRequestException('No file uploaded');
         }
 
+        // Normaliza a URL para o formato correto
+        const normalizedFilePath = join('uploads', file.filename).replace(/\\/g, '/');
 
+        const postData: CreatePostDto = {
+        ...createPostDto,
+        imageUrl: normalizedFilePath, // barras normais
+        };
+
+    console.log('Dados do post:', postData); // Verifica o que está sendo passado
+
+    return await this.postService.createPost(postData);
+  }
     @Get(':id')
     async findOne(@Param('id') id: string ): Promise<PostModel>{
         const postId = parseInt(id);
