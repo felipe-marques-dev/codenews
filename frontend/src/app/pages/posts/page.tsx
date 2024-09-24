@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import "../../globals.css";
+import BlogPostsLoading from "@/components/ui/postsLoading";
 
 interface PostProps{
     posts: Post[];
@@ -33,20 +34,14 @@ export default function PostsPage (){
         fetchPosts();
     }, []);
 
-    if(loading){
-        return <p> Loading...</p>
-    }
-
-    return (
-        <div className="container mx-auto py-8 m-3">
-          <h1 className="text-3xl font-bold mb-8 m-4">Latest Blog Posts</h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    
+      return (
+          <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-3">
             {posts.map((post) => (
               <Card key={post.id} className="flex flex-col m-3"
                 style={{
                     cursor: 'pointer',
                     borderRadius: '8px',
-                    backgroundColor: "#202020"
                 }}
               >
                 <div className="relative w-full h-62 p-4 pb-0 bg-cbackground">
@@ -81,7 +76,6 @@ export default function PostsPage (){
               </Card>
             ))}
           </div>
-        </div>
     ) 
 };
 
