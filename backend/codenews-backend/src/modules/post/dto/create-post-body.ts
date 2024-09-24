@@ -1,23 +1,26 @@
-import { IsString, IsNotEmpty, IsOptional, isNotEmpty, IsBoolean } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional, IsBoolean } from 'class-validator';
 
 export class CreatePostDto {
   @IsString()
- 
+  @IsNotEmpty()
   title: string;
 
   @IsString()
   @IsOptional()
   content?: string;
 
-  @IsNotEmpty()
   @IsBoolean()
   published?: boolean;
 
+  @IsString()
   authorEmail: string;
-  author: string;
-  authorId: string;
-  imageUrl?: string;
-  // Supondo que você tenha um autor associado ao post
-  
 
+  @IsString()
+  author: string;
+
+  @IsString()
+  authorId: string;
+
+  @IsString()
+  imageUrl?: string;
 }
