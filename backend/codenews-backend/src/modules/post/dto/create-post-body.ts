@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsOptional, isNotEmpty } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional, isNotEmpty, IsBoolean } from 'class-validator';
 
 export class CreatePostDto {
   @IsString()
@@ -10,12 +10,13 @@ export class CreatePostDto {
   content?: string;
 
   @IsNotEmpty()
-  published: boolean;
+  @IsBoolean()
+  published?: boolean;
 
+  authorEmail: string;
   author: string;
-
-  authorId: number;
-  
+  authorId: string;
+  imageUrl?: string;
   // Supondo que você tenha um autor associado ao post
   
 

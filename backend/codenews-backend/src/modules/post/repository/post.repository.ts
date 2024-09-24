@@ -17,7 +17,7 @@ export class PostRepository {
 
   async findOne(id: number) {
     return this.prisma.post.findUnique({
-      where: { id },
+      where: {id: id },
     });
   }
 
@@ -27,21 +27,25 @@ export class PostRepository {
       data: {
         ...postData,
         author: {
-          connect: { id: authorId},
+          connect: { id: parseInt(authorId)},
         }
       }
     });
   }
 
   async updatePost(id: number, updatePostDto: Partial<CreatePostDto>) {
-    const {authorId, ...postData} = updatePostDto;
+    const {authorId, authorEmail, ...postData} = updatePostDto;
     return this.prisma.post.update({
       where: { id },
       data:{
         ...postData,
         ...authorId && { // atualiza o autor somente se um novo id for passado
           author: {
-            connect: { id: authorId}
+            connect: {
+               id: parseInt(authorId),
+               email: authorEmail,
+              },
+            
           }
         }
       },
