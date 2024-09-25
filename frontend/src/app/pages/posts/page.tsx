@@ -65,6 +65,7 @@ export default function PostsPage (){
                     <Avatar>
                       <AvatarFallback></AvatarFallback>
                     </Avatar>
+                    { /* @ts-expect-error api error*/}
                     <span className="text-md font-medium">{post.author.name}</span>
                   </div>
                   { /* <span className="text-sm text-muted-foreground">{post.date}</span> */}
