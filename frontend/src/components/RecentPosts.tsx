@@ -8,24 +8,20 @@ import "../app/globals.css";
 import { Button } from "./ui/button";
 import { ArrowRightIcon } from "lucide-react";
 
-interface PostProps{
-    posts: Post[];
-}
-
 export default function RecentPosts (){
     const [posts, setPosts] = useState<Post[]>([]);
-    const [loading, setLoading] = useState(true);
+    
 
     useEffect(() => {
         const fetchPosts = async () => {
             try {
                 const { data: posts} = await client.get<Post[]>('/post/allpost');
                 setPosts(posts)
-                setLoading(false)
+                
                 
             }catch (error) {
                 console.error('Erro fetching posts:', error);
-                setLoading(false)
+                
             }
         }
         fetchPosts();
