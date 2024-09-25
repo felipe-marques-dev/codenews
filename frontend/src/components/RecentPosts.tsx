@@ -1,15 +1,10 @@
 "use client";
 
-import Image from "next/image"
-import { GetServerSideProps } from "next";
 import { Post } from "@/types/Post";
-import axios from "axios";
 import { client } from "@/services/client";
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import "../app/globals.css";
-import BlogPostsLoading from "@/components/ui/postsLoading";
 import { Button } from "./ui/button";
 import { ArrowRightIcon } from "lucide-react";
 
