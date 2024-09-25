@@ -1,5 +1,4 @@
 import CryptoPrices from "@/components/CryptoPricess";
-import PostsPage from "./pages/posts/page";
 import LastNews from "@/components/LastNews";
 import { Button } from "@/components/ui/button";
 import RecentPosts from "@/components/RecentPosts";

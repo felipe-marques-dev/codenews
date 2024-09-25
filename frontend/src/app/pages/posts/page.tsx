@@ -1,19 +1,14 @@
 "use client";
 
-import Image from "next/image"
-import { GetServerSideProps } from "next";
 import { Post } from "@/types/Post";
-import axios from "axios";
 import { client } from "@/services/client";
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import "../../globals.css";
-import BlogPostsLoading from "@/components/ui/postsLoading";
 
-interface PostProps{
-    posts: Post[];
-}
+
+
 
 export default function PostsPage (){
     const [posts, setPosts] = useState<Post[]>([]);
