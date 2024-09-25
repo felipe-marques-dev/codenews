@@ -1,4 +1,4 @@
-import CryptoPrices from "@/components/cryptoPrices";
+import CryptoPrices from "@/components/CryptoPricess";
 import PostsPage from "./pages/posts/page";
 import LastNews from "@/components/LastNews";
 import { Button } from "@/components/ui/button";
