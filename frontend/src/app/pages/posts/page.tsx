@@ -44,7 +44,7 @@ export default function PostsPage (){
                     borderRadius: '8px',
                 }}
               >
-                <div className="relative w-full h-62 p-4 pb-0 bg-cbackground">
+                <div className="relative w-full  lg:h-4/6 h-62 p-4 pb-0 bg-cbackground">
                 <img
                 src={`http://localhost:8000/${post.imageUrl}`}
                 style={{
@@ -61,7 +61,7 @@ export default function PostsPage (){
                 <CardHeader>
                   <h2 className="text-2xl font-semibold">{post.title}</h2>
                 </CardHeader>
-                <CardContent className="flex-grow">
+                <CardContent className="flex-grow lg:pb-0">
                   <p className="text-muted-foreground text-lg">{post.content}</p>
                 </CardContent>
                 <CardFooter className="flex items-center justify-between">
