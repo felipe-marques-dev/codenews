@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-export default function Component() {
+export default function CryptoPrices() {
   const cryptoPrices = [
     { name: 'Bitcoin', price: 34567, change: 2.5 },
     { name: 'Ethereum', price: 2345, change: -1.2 },

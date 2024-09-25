@@ -38,8 +38,8 @@ export default function LastNews() {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const { data } = await axios.get<NewsApiResponse>(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${api_key}`);
-                setPosts(data.articles.slice(0,4)); // Acesse os artigos corretamente
+                const { data } = await axios.get<NewsApiResponse>(`https://newsapi.org/v2/top-headlines?country=us&category=technology&pageSize=2&apiKey=${api_key}`);
+                setPosts(data.articles); // Acesse os artigos corretamente
                 console.log(data.articles); // Log apenas os artigos
                 setLoading(false);
             } catch (error) {
