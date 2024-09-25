@@ -7,16 +7,17 @@
   --foreground: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) { 
   :root {
-    --background: rgb(30 41 59);;
+    --background: rgb(21, 31, 46);
     --foreground: #ffffff;
   }
 }
 
 body {
   color: var(--foreground);
-  background: var(--background);
+  background-color: var(--background); /* Alterado de 'background' para 'background-color' */
+
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -25,3 +26,5 @@ body {
     text-wrap: balance;
   }
 }
+
+
