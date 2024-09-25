@@ -12,6 +12,10 @@ import {
 @Controller('/') // prefixo de rotas
 export class AppController {
 
+  @Get('health')
+  sayHello(): string{
+    return 'Hello!';
+  }
 }
 
 // test!
